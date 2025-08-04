@@ -8,6 +8,7 @@
 @theme {
   --color-primary: #d8f900;
   --font-Druk: "Druk-Condensed-Super", "sans-serif";
+  --breakpoint-3xl: 120rem;
 }
 
 #root {
