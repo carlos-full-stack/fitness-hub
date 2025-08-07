@@ -8,7 +8,7 @@ export default function Header() {
         <div className='flex justify-between items-center px-5 h-16 bg-gray-600 text-white flex-shrink-0'>
             <Logo />
             <NavMenu />
-            <Button />
+            <Button color='primary' text='Login' />
         </div>
     )
 }
