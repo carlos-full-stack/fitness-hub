@@ -1,6 +1,7 @@
 import React from 'react'
 import Heading from '../../ui/Heading'
 import Button from '../../ui/Button';
+import Statistics from '../../ui/Statistics';
 
 export default function LeftColumn() {
 
@@ -14,6 +15,9 @@ export default function LeftColumn() {
             <div className="flex flex-row gap-3 pt-6">
                 <Button color='primary' text='Get Started' />
                 <Button color='secondary' text='How it works' />
+            </div>
+            <div className='pt-12'>
+                <Statistics />
             </div>
         </>
     )
