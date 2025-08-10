@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
-import styles from './Card.module.css'
+import styles from './card.module.css'
 
 
+export default function Card({ bgUrl = 'none', children = null }) {
 
-export default function Card({ full = false, bgUrl }) {
+    const backgroundImage = bgUrl !== 'none'
+        ? `url(${bgUrl})`
+        : 'none';
 
     return (
-        <div style={{ backgroundImage: `url(${bgUrl})` }} className={`${styles.cardBaseShapev} ${full && 'w-full'}`}>
+        <div style={{ backgroundImage: ` ${backgroundImage}`, backgroundSize: 'cover' }} className={`${styles.cardBaseShape} h-[350px] relative`}>
+            {children}
         </div >
     )
 }
