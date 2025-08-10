@@ -1,0 +1,34 @@
+import React from 'react'
+import CardWithImage from './CardWithImage'
+import Card from './'
+import CardWithDescription from './CardWithDescription'
+import CardWithPrice from './CardWithPrice'
+import CardWithRating from './CardWithRating'
+
+const cardTypes = {
+    'image': CardWithImage,
+    'description': CardWithDescription,
+    'price': CardWithPrice,
+    'rating': CardWithRating,
+    default: Card
+
+};
+
+
+export default function CardGallery({ type, cards }) {
+
+    const CardComponent = cardTypes[type] || cardTypes.default;
+
+    return (
+
+        <div className='w-full pt-10'>
+            <ul className='inline-flex flex-col lg:flex-row gap-6 w-full justify-center'>
+                {cards.map((card, index) => (
+                    <li className='flex-1 gap-6' key={index}>
+                        <CardComponent {...card} />
+                    </li>
+                ))}
+            </ul>
+        </div >
+    )
+}
