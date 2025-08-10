@@ -1,14 +1,11 @@
 import React from 'react'
 import Card from './index'
 
-// const cardImages = [
-//     { id: 1, bgUrl: 'url.jpg' },
-//     { id: 1, bgUrl: 'url.jpg' },
-//     { id: 1, bgUrl: 'url.jpg' }
-// ]
+export default function CardWithImage({ bgUrl = 'none', text = '' }) {
 
-export default function CardWithImage({ bgUrl }) {
+    const children = <span className='absolute left-[20px] bottom-[20px] font-Druk uppercase text-3xl text-white tracking-wider text-shadow-lg'>{text}</span>
+
     return (
-        <Card bgUrl={bgUrl} />
+        <Card bgUrl={bgUrl} children={children} />
     )
 }
