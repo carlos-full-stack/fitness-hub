@@ -15,7 +15,7 @@ export default function LeftColumn() {
             />
             <div className="flex flex-row gap-3 pt-6">
                 <Button color='primary' text='Get Started' />
-                <Button color='secondary' text='How it works' />
+                <Button color='transparent' text='How it works' />
             </div>
             <div className='py-9'>
                 <Statistics />
