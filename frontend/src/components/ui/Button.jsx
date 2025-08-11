@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Button({ text, color }) {
+export default function Button({ text, color = 'primary' }) {
 
     const baseClasses = 'capitalize py-2 px-6 rounded-sm';
 
