@@ -4,7 +4,6 @@ import Brands from './brands'
 import Section from '../ui/Section'
 import Heading from '../ui/Heading'
 import CardGallery from '../ui/Card/CardGallery'
-import Card from '../ui/Card'
 import CardWithImage from '../ui/Card/CardWithImage'
 
 const section1cards = [
@@ -21,6 +20,13 @@ const section2cards = [
     { id: 4, icon: 'Dumbbell', title: 'XPERT GUIDANCE AND PERSONALIZED', subtitle: 'A top-notch gym should boast a diverse array of cutting-edge fitness equipment catering to various workout styles.' },
 ]
 
+const section3cards = [
+
+    { id: 1, price: 12, title: 'Daily Package', description: 'Where fitness meets inspiration, and every drop of sweat tells a story of determination' },
+    { id: 2, price: 36, title: 'Monthly Pakage', description: 'Where fitness meets inspiration, and every drop of sweat tells a story of determination' },
+    { id: 3, price: 1200, title: 'Endurance', description: 'Where fitness meets inspiration, and every drop of sweat tells a story of determination' }
+]
+
 export default function Body() {
     return (
         <>
@@ -34,7 +40,7 @@ export default function Body() {
                     textAlign='center' />
                 <CardGallery type='image' cards={section1cards} />
             </Section>
-            <Section backgroundColor='default'>
+            <Section>
                 <div className='flex flex-col md:flex-row'>
                     <div className='md:flex-[60%]'>
                         <Heading
@@ -50,13 +56,21 @@ export default function Body() {
                     <CardWithImage bgUrl='img/banner.png' />
                 </div>
             </Section>
-            <Section backgroundColor='default'>
+            <Section>
                 <Heading
                     eyebrowText='Why choose us'
                     headingText={<div><div><span className='text-stroke'>Fuel</span> your ambition</div><div>Ignite <span className='text-stroke'>your passion</span></div></div>}
                     level='h2'
                     textAlign='center' />
                 <CardGallery type='description' cards={section2cards} />
+            </Section>
+            <Section backgroundColor='light'>
+                <Heading
+                    eyebrowText='Pricing'
+                    headingText={<div><span className='text-stroke'>Choose</span> your perfect<span className='text-stroke'> plan</span></div>}
+                    level='h2'
+                    textAlign='center' />
+                <CardGallery type='price' cards={section3cards} />
             </Section>
         </>
     )
