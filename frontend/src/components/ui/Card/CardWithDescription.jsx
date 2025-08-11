@@ -9,6 +9,6 @@ export default function CardWithDescription({ title, subtitle }) {
   </div>
 
   return (
-    <Card children={children} />
+    <Card children={children} bgColor='primary' />
   )
 }
