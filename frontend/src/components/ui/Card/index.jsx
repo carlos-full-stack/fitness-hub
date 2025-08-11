@@ -22,7 +22,7 @@ export default function Card({ bgUrl = 'none', bgColor = 'default', children = n
         : 'text-black'
 
     return (
-        <div style={{ backgroundImage: ` ${backgroundImage}`, backgroundSize: 'cover' }} className={`${styles.cardBaseShape} ${CardBgColor} ${textColor} h-[350px] relative`}>
+        <div style={{ backgroundImage: ` ${backgroundImage}`, backgroundSize: 'cover' }} className={`${styles.cardBaseShape} ${CardBgColor} ${textColor} md:h-[350px] relative`}>
             {children}
         </div >
     )
