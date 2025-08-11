@@ -27,6 +27,14 @@ const section3cards = [
     { id: 3, price: 1200, title: 'Endurance', description: 'Where fitness meets inspiration, and every drop of sweat tells a story of determination' }
 ]
 
+const section4cards = [
+
+    { id: 1, rating: 5, feedback: 'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the change & it is a good channel for us.', userImgUrl: '/img/users/user-img1' },
+    { id: 2, rating: 4, feedback: 'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the change & it is a good channel for us.', userImgUrl: '/img/users/user-img2' },
+    { id: 3, rating: 3, feedback: 'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the change & it is a good channel for us.', userImgUrl: '/img/users/user-img3' }
+
+]
+
 export default function Body() {
     return (
         <>
@@ -71,6 +79,18 @@ export default function Body() {
                     level='h2'
                     textAlign='center' />
                 <CardGallery type='price' cards={section3cards} />
+            </Section>
+            <Section>
+                <div className='flex flex-row '>
+                    <Heading
+                        eyebrowText='Our blog'
+                        headingText={<div><span className='text-stroke'>Explore</span> our<span className='text-stroke'> articles</span></div>} level='h2'
+                        textAlign='left'
+                    />
+                </div>
+                <div className='pt-8'>
+                    <CardGallery type='rating' cards={section4cards} />
+                </div>
             </Section>
         </>
     )
