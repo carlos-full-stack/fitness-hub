@@ -5,6 +5,7 @@ import Section from '../ui/Section'
 import Heading from '../ui/Heading'
 import CardGallery from '../ui/Card/CardGallery'
 import CardWithImage from '../ui/Card/CardWithImage'
+import CardWithForm from '../ui/Card/CardWithForm'
 
 const section1cards = [
 
@@ -29,9 +30,16 @@ const section3cards = [
 
 const section4cards = [
 
-    { id: 1, rating: 5, feedback: 'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the change & it is a good channel for us.', userImgUrl: '/img/users/user-img1' },
-    { id: 2, rating: 4, feedback: 'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the change & it is a good channel for us.', userImgUrl: '/img/users/user-img2' },
-    { id: 3, rating: 3, feedback: 'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the change & it is a good channel for us.', userImgUrl: '/img/users/user-img3' }
+    { id: 1, rating: 5, feedback: 'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the change & it is a good channel for us.', userImgUrl: '/img/users/user-img1', userName: 'David Alexander', userRole: 'admin' },
+    { id: 2, rating: 4, feedback: 'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the change & it is a good channel for us.', userImgUrl: '/img/users/user-img2', userName: 'Jhon Williams', userRole: 'CEO' },
+    { id: 3, rating: 3, feedback: 'You made it so simple. My new site is so much faster and easier to work with than my old site. I just choose the page, make the change & it is a good channel for us.', userImgUrl: '/img/users/user-img3', userName: 'David Alexander', userRole: 'admin' }
+
+]
+
+const formFields = [
+
+    { id: 1, type: 'text', name: 'Name', placeholder: 'Enter your name' },
+    { id: 2, type: 'email', name: 'Email', placeholder: 'Enter your email' },
 
 ]
 
@@ -91,6 +99,9 @@ export default function Body() {
                 <div className='pt-8'>
                     <CardGallery type='rating' cards={section4cards} />
                 </div>
+            </Section>
+            <Section backgroundColor='dark'>
+                <CardWithForm formFields={formFields} title="Let's join our community" subtitle='Where fitness meets inspiration, and every drop of sweat tells a story of determination.' />
             </Section>
         </>
     )
