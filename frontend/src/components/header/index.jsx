@@ -5,10 +5,9 @@ import Button from '../ui/Button';
 
 export default function Header() {
     return (
-        <div className='flex justify-between items-center px-5 h-16 bg-gray-600 text-white flex-shrink-0'>
+        <div className='flex justify-between items-center px-8 md:px-14 h-20 bg-gray-600 text-white flex-shrink-0'>
             <Logo />
             <NavMenu />
-            <Button color='primary' text='Login' />
         </div>
     )
 }
