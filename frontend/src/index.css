@@ -19,6 +19,14 @@ body {
   background-color: rgb(198, 198, 198);
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
 .text-stroke {
   color: transparent;
   -webkit-text-stroke-width: 1px;
