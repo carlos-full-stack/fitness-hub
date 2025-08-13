@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Section({ backgroundColor = 'default', children }) {
+export default function Section({ backgroundColor = 'default', children, className = '' }) {
 
     const backgroundClasses = {
         light: 'bg-gray-700',
@@ -11,7 +11,7 @@ export default function Section({ backgroundColor = 'default', children }) {
     const bgColor = backgroundClasses[backgroundColor]
 
     return (
-        <div className={`${bgColor} p-8 md:px-16 flex flex-col gap-3`}>
+        <div className={`${bgColor} p-8 md:px-16 flex flex-col gap-3 ${className}`}>
             {children}
         </div >
     )
