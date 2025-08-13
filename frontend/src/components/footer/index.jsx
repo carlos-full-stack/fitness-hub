@@ -7,15 +7,15 @@ import Section from '../ui/Section'
 
 export default function Footer() {
     return (
-        <Section backgroundColor='dark'>
-            <div className='grid grid-cols-1 grid-rows-3 md:grid-cols-3 md:grid-rows-2 gap-8 md:gap-0'>
+        <Section className='pb-0' backgroundColor='dark'>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0'>
                 <Brand />
-                <div className='flex flex-col gap-2 text-white text-center'>
+                <div className='flex flex-col gap-4 text-white text-center'>
                     <span className='text-2xl'>Quick links</span>
                     <NavLinks direction='horizontal' textSize='base' />
                 </div>
                 <Legal />
-                <CopyRight className='md:col-span-3' />
+                <CopyRight className='md:col-span-3 md:mt-[20px] py-4' />
             </div>
         </Section>
     )

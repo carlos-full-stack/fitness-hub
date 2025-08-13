@@ -11,7 +11,7 @@ export default function NavLinks({ direction, textSize }) {
 
 
     const directionClasses = {
-        horizontal: 'flex-row',
+        horizontal: 'flex-col lg:flex-row',
         vertical: 'flex-col'
     }
 
