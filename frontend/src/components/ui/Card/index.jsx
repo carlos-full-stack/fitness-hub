@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './card.module.css'
 
 
-export default function Card({ bgUrl = 'none', bgColor = 'default', children = null }) {
+export default function Card({ variant = '', bgUrl = 'none', bgColor = 'default', children = null }) {
 
     const backgroundImage = bgUrl !== 'none'
         ? `url(${bgUrl})`
@@ -22,7 +22,8 @@ export default function Card({ bgUrl = 'none', bgColor = 'default', children = n
         : 'text-black'
 
     return (
-        <div style={{ backgroundImage: ` ${backgroundImage}`, backgroundSize: 'cover' }} className={`${styles.cardBaseShape} ${CardBgColor} ${textColor} md:h-[350px] relative`}>
+        <div style={{ backgroundImage: ` ${backgroundImage}`, backgroundSize: 'cover' }} className={`${styles.cardBaseShape} ${CardBgColor} ${textColor} ${variant === 'image' ? 'h-[350px]' : 'h-auto'} relative
+} `}>
             {children}
         </div >
     )

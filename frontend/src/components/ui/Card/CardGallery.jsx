@@ -22,7 +22,7 @@ export default function CardGallery({ type, cards }) {
     return (
 
         <div className='w-full pt-10'>
-            <ul className='inline-flex flex-col lg:flex-row gap-6 w-full justify-center'>
+            <ul className='flex flex-col lg:flex-row gap-6 w-full justify-center'>
                 {cards.map((card, index) => (
                     <li className='flex-1 gap-6' key={index}>
                         <CardComponent {...card} />
