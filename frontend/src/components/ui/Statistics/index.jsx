@@ -10,7 +10,7 @@ export default function Statistics() {
     }
 
     return (
-        <ul className='inline-flex gap-7 md:gap-10'>
+        <ul className='inline-flex gap-6 md:gap-8'>
             {Object.entries(statistics).map(([text, number]) => (
                 <li key={text}>
                     <StatisticsItem text={text} number={number} />
