@@ -8,7 +8,7 @@ export default function CardWithPrice({ price, title, description }) {
         <div>
             <span className='text-5xl'>{`${price}€`}</span>
             <h3 className='text-xl pt-2'>{title}</h3>
-            <p className='pt-3'>{description}</p>
+            <p className='py-4'>{description}</p>
         </div>
         <Button text='Discover more' />
     </div>
