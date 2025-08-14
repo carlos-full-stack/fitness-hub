@@ -11,12 +11,13 @@
   --breakpoint-3xl: 120rem;
 }
 
-#root {
-  height: 100vh;
+
+html {
+  min-height: 100vh;
 }
 
 body {
-  background-color: rgb(198, 198, 198);
+  background: linear-gradient(180deg, rgba(226, 232, 240, 1) 0%, rgba(203, 213, 225, 1) 50%) no-repeat;
 }
 
 a {
