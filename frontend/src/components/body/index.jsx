@@ -6,6 +6,10 @@ import Heading from '../ui/Heading'
 import CardGallery from '../ui/Card/CardGallery'
 import CardWithImage from '../ui/Card/CardWithImage'
 import CardWithForm from '../ui/Card/CardWithForm'
+import DumbellIcon from '../ui/Card/CardWithDescription/DumbellIcon'
+import AwardIcon from '../ui/Card/CardWithDescription/AwardIcon'
+import HistoryIcon from '../ui/Card/CardWithDescription/HistoryIcon'
+import CoinsIcon from '../ui/Card/CardWithDescription/CoinsIcon'
 
 const section1cards = [
 
@@ -15,10 +19,10 @@ const section1cards = [
 ]
 const section2cards = [
 
-    { id: 1, icon: 'Dumbbell', title: 'CUTTING-EDGE EQUIPMENT', subtitle: 'A top-notch gym should boast a diverse array of cutting-edge fitness equipment catering to various workout styles.' },
-    { id: 2, icon: 'Dumbbell', title: 'XPERT GUIDANCE AND PERSONALIZED', subtitle: 'A top-notch gym should boast a diverse array of cutting-edge fitness equipment catering to various workout styles.' },
-    { id: 3, icon: 'Dumbbell', title: 'ATMOSPHERE AND COMMUNITY', subtitle: 'A top-notch gym should boast a diverse array of cutting-edge fitness equipment catering to various workout styles.' },
-    { id: 4, icon: 'Dumbbell', title: 'XPERT GUIDANCE AND PERSONALIZED', subtitle: 'A top-notch gym should boast a diverse array of cutting-edge fitness equipment catering to various workout styles.' },
+    { id: 1, Icon: DumbellIcon, title: 'CUTTING-EDGE EQUIPMENT', subtitle: 'A top-notch gym should boast a diverse array of cutting-edge fitness equipment catering to various workout styles.' },
+    { id: 2, Icon: AwardIcon, title: 'XPERT GUIDANCE AND PERSONALIZED', subtitle: 'A top-notch gym should boast a diverse array of cutting-edge fitness equipment catering to various workout styles.' },
+    { id: 3, Icon: HistoryIcon, title: 'ATMOSPHERE AND COMMUNITY', subtitle: 'A top-notch gym should boast a diverse array of cutting-edge fitness equipment catering to various workout styles.' },
+    { id: 4, Icon: CoinsIcon, title: 'XPERT GUIDANCE AND PERSONALIZED', subtitle: 'A top-notch gym should boast a diverse array of cutting-edge fitness equipment catering to various workout styles.' },
 ]
 
 const section3cards = [
