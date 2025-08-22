@@ -8,8 +8,6 @@ const socialIcons = [FacebookIcon, InstagramIcon, YoutubeIcon]
 
 export default function SocialIcons({ color }) {
 
-    console.log('El color es;', color);
-
     return (
         <ul className='inline-flex justify-center md:justify-start gap-6'>
             {socialIcons.map((Icon, index) => (<li key={index}><Icon color={`text-${color}`} /></li>))}
