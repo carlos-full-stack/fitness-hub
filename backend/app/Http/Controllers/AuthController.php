@@ -6,19 +6,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
+
+        Log::info('Request data:', $request->all());
+
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:25',
+            'last_name' => 'string|max:50',
+            'height' => 'integer|max:250',
+            'weight' => 'integer|max:300',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:8|confirmed'
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'last_name' => $request->last_name,
+            'height' => $request->height,
+            'weight' => $request->weight,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
