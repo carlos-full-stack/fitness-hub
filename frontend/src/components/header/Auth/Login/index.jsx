@@ -5,8 +5,8 @@ import SuccessIcon from './SuccessIcon';
 
 const loginFormFields = [
 
-    { id: 1, type: 'email', name: 'email', placeholder: 'Enter your email' },
-    { id: 2, type: 'password', name: 'password', placeholder: 'Enter your password' },
+    { id: 1, type: 'email', name: 'email', label: 'Email',  placeholder: 'Enter your email' },
+    { id: 2, type: 'password', name: 'password', label: 'Password', placeholder: 'Enter your password' },
 
 ]
 
@@ -16,7 +16,7 @@ export default function Login() {
     const [loginState, setLoginState] = useState('initial');
 
     const closeDialogWithDelay = () => {
-    setTimeout(() => setIsDialogOpen(false), 3000);
+    setTimeout(() => setIsDialogOpen(false), 2000);
     }
 
 
