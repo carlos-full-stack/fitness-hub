@@ -12,7 +12,7 @@ export default function Footer() {
                 <Brand />
                 <div className='flex flex-col gap-4 text-white text-center'>
                     <span className='text-2xl'>Quick links</span>
-                    <NavLinks direction='horizontal' textSize='base' />
+                    <NavLinks type='page' />
                 </div>
                 <Legal />
                 <CopyRight className='md:col-span-3 md:mt-[20px] py-4' />
