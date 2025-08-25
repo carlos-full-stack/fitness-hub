@@ -64,9 +64,10 @@ export default function Body() {
                 <div className='flex flex-col md:flex-row'>
                     <div className='md:flex-[60%]'>
                         <Heading
-                            eyebrowText='Our Featured'
+                            eyebrowText='Who we are'
                             headingText={<div><div><span className='text-stroke'>Elevate</span> your fitness</div><div>journey <span className='text-stroke'>with us</span></div></div>}
                             level='h2'
+                            id='who'
                             textAlign='left'
                         />
                     </div>
@@ -89,6 +90,7 @@ export default function Body() {
                     eyebrowText='Pricing'
                     headingText={<div><span className='text-stroke'>Choose</span> your perfect<span className='text-stroke'> plan</span></div>}
                     level='h2'
+                    id='pricing'
                     textAlign='center' />
                 <CardGallery type='price' cards={section3cards} />
             </Section>
@@ -97,6 +99,7 @@ export default function Body() {
                     <Heading
                         eyebrowText='Our blog'
                         headingText={<div><span className='text-stroke'>Explore</span> our<span className='text-stroke'> articles</span></div>} level='h2'
+                        id='articles'
                         textAlign='left'
                     />
                 </div>
