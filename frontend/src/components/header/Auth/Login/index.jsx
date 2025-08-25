@@ -22,7 +22,7 @@ export default function Login() {
 
     return (
         <>
-            <span className="cursor-pointer" onClick={() => setIsDialogOpen(true)}>Login</span>
+            <span className="hover:text-primary cursor-pointer" onClick={() => setIsDialogOpen(true)}>Login</span>
             <Dialog open={isDialogOpen} onClose={() => setIsDialogOpen(false)} className="relative z-50">
                 <div className="fixed inset-0 bg-black opacity-50" aria-hidden="true" />
                 <div className="fixed inset-0 flex w-screen items-center justify-center p-4">

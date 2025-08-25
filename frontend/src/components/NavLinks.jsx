@@ -58,7 +58,7 @@ export default function NavLinks({ type='page' }) {
                         <>
 
                             <li onClick={handleLogout} className='flex items-center gap-3 absolute bottom-10' key={index}>
-                            <span className='cursor-pointer'>{item.text}</span><SquareArrowOutIcon />
+                            <span className='hover:text-primary cursor-pointer'>{item.text}</span><SquareArrowOutIcon />
                             </li>
                         </>
                         )
