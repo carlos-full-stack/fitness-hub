@@ -1,4 +1,3 @@
-import React from "react";
 import CardWithImage from "./CardWithImage";
 import Card from "./";
 import CardWithDescription from "./CardWithDescription/";
@@ -20,7 +19,7 @@ export default function CardGallery({ type, cards }) {
 
   return (
     <div className="w-full py-8 md:py-10">
-      <ul className="flex flex-col lg:flex-row gap-6 w-full justify-center">
+      <ul className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6 w-full justify-center">
         {cards.map((card, index) => (
           <li className="flex-1 gap-6" key={index}>
             <CardComponent {...card} />
