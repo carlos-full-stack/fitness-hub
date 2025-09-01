@@ -1,143 +1,174 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
+import UserAvatar from "../../../header/Auth/UserAvatar";
+import { useAuth } from "../../../../context/AuthContext";
+import Button from "../../Button";
 
 export default function CardWithAutoForm({ plansData, formFields }) {
-  const [formData, setFormData] = useState({});
+  const [userData, setuserData] = useState({});
   const [fieldErrors, setFieldErrors] = useState({});
   const debounceRef = useRef(null);
+  const fileInputRef = useRef(null);
+  const { user, setUser } = useAuth();
 
   useEffect(() => {
-    async function fetchUserData() {
-      const token = localStorage.getItem("token");
-
-      try {
-        const response = await axios.get("api/user", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        response && setFormData(response.data.user);
-      } catch (error) {
-        console.error("Error displaying data", error);
-      }
+    if (user) {
+      setuserData(user);
     }
+  }, [user]);
 
-    fetchUserData();
-  }, []);
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
 
   const handleOnChange = (e) => {
-    let newFormData;
+    let newUserData;
 
     if (e.target.name === "plan_id") {
       const parsedValue = parseInt(e.target.value);
-
-      console.log("el valor parseado es ", parsedValue);
-
-      newFormData = { ...formData, [e.target.name]: parsedValue };
+      newUserData = { ...userData, [e.target.name]: parsedValue };
+    } else if (e.target.type === "file") {
+      newUserData = { ...userData, [e.target.name]: e.target.files[0] };
     } else {
-      newFormData = { ...formData, [e.target.name]: e.target.value };
+      newUserData = { ...userData, [e.target.name]: e.target.value };
     }
 
-    setFormData(newFormData);
+    setuserData(newUserData);
 
-    debounceRef.current && clearTimeout(debounceRef.current);
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
 
-    debounceRef.current = setTimeout(() => {
-
-      handleSubmit();
-    }, 2000);
+    if (e.target.type === "file" || e.target.name === "plan_id") {
+      handleSubmit(newUserData);
+    } else {
+      debounceRef.current = setTimeout(() => {
+        handleSubmit(newUserData);
+      }, 2000);
+    }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (dataToSend = userData) => {
     const token = localStorage.getItem("token");
+    const formDataToSend = new FormData();
+
+    Object.entries(dataToSend).forEach(([key, value]) => {
+      if (key === "user_url") {
+        if (value instanceof File) {
+          formDataToSend.append(key, value);
+        }
+      } else {
+        if (value !== null && value !== undefined) {
+          formDataToSend.append(key, value);
+        }
+      }
+    });
 
     try {
-      const response = await axios.post("/api/update", formData, {
+      const response = await axios.post("/api/update", formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       });
 
       if (response && response.data.user) {
-        console.log("Se actualizaron los datos");
+        setUser(response.data.user);
+        setFieldErrors({});
       }
     } catch (error) {
-      console.log(error);
-      const fieldErrors = error.response.data.error;
+      const fieldErrors = error.response?.data?.errors;
       fieldErrors && setFieldErrors(fieldErrors);
     }
   };
 
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <div className="flex flex-col gap-5 w-full p-6 bg-gray-700">
+    <form className="flex flex-col gap-5 w-full p-6 bg-gray-700">
       <div className="flex flex-col items-center justify-center gap-6 mb-3">
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          data-slot="icon"
-          aria-hidden="true"
-          className="size-32 text-gray-300"
-        >
-          <path
-            d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-            clip-rule="evenodd"
-            fill-rule="evenodd"
+        <UserAvatar size={145} />
+        <input
+          type="file"
+          name="user_url"
+          ref={fileInputRef}
+          accept="image/*"
+          className="hidden"
+          onChange={handleOnChange}
+        />
+        <div className="flex flex-row gap-2">
+          <Button
+            text="Upload photo"
+            color="transparent"
+            onClick={handleButtonClick}
           />
-        </svg>
-        <button
-          type="button"
-          className="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs inset-ring inset-ring-gray-300 hover:bg-gray-50"
-        >
-          Change
-        </button>
+        </div>
       </div>
-      <form className="grid grid-cols-2 gap-3 w-full">
+      <div className="grid grid-cols-2 gap-3 w-full">
         {formFields.map((field, index) => (
           <div
+            key={index}
             className={`flex flex-col w-full ${
               field.id !== 5 && field.id !== 6 ? "col-span-2" : ""
             }`}
           >
             {field.type === "select" ? (
               <>
-                <label id="plans" className="text-white pb-3">
+                <label htmlFor="plans" className="text-white pb-3">
                   {field.label}
                 </label>
                 <select
-                  key={index}
                   id="plans"
                   name={field.name}
-                  value={formData[field.name]}
+                  value={userData[field.name] || ""}
                   onChange={handleOnChange}
                   className="w-full md:size-auto border bg-white py-2 pr-3 pl-2 focus:outline-none"
                 >
-                  {plansData.map((plan, index) => (
-                    <option key={index} value={plan.id}>
+                  {plansData.map((plan, planIndex) => (
+                    <option key={planIndex} value={plan.id}>
                       {plan.name}
                     </option>
                   ))}
                 </select>
               </>
             ) : (
-              <input
-                key={index}
-                type={field.type}
-                name={field.name}
-                placeholder={field.placeholder}
-                value={formData[field.name]}
-                className={`w-full md:size-auto border ${
-                  fieldErrors[field.name] ? "border-red-500" : "border-gray-800"
-                } w-full bg-white py-2 pr-3 pl-2 focus:outline-none`}
-                onChange={handleOnChange}
-              />
+              <div className="w-full relative">
+                <input
+                  type={field.type}
+                  name={field.name}
+                  placeholder={field.placeholder}
+                  value={userData[field.name] || ""}
+                  className={`w-full border ${
+                    fieldErrors[field.name]
+                      ? "border-red-500"
+                      : "border-gray-800"
+                  } bg-white py-2 pr-3 pl-2 focus:outline-none`}
+                  maxLength={
+                    field.name === "weight" || field.name === "height"
+                      ? 3
+                      : undefined
+                  }
+                  onChange={handleOnChange}
+                />
+                {(field.name === "weight" || field.name === "height") && (
+                  <span className="text-md text-gray-400 absolute top-2 right-3 pointer-events-none">
+                    {field.units}
+                  </span>
+                )}
+              </div>
             )}
-            <span className="text-sm pt-2">
+            <span className="text-sm text-white pt-2">
               {fieldErrors[field.name] && fieldErrors[field.name][0]}
             </span>
           </div>
         ))}
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }
