@@ -1,5 +1,22 @@
-export default function UserIcon() {
+export default function UserIcon({ size = 50 }) {
+  const svgSize = {
+    width: `${size}px`,
+    height: `${size}px`,
+  };
+
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-primary" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-  )
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      data-slot="icon"
+      aria-hidden="true"
+      style={{ width: svgSize.width, height: svgSize.height }}
+    >
+      <path
+        d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+        clip-rule="evenodd"
+        fill-rule="evenodd"
+      />
+    </svg>
+  );
 }
