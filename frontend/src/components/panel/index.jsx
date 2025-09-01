@@ -20,8 +20,8 @@ const formFields = [
     name: "last_name",
     placeholder: "Last name",
   },
-  { id: 5, type: "text", name: "weight", placeholder: "Weight" },
-  { id: 6, type: "text", name: "height", placeholder: "Height" },
+  { id: 5, type: "text", name: "weight", placeholder: "Weight", units: "KG" },
+  { id: 6, type: "text", name: "height", placeholder: "Height", units: "CM" },
   {
     id: 7,
     type: "select",
@@ -39,8 +39,6 @@ export default function Panel() {
         const response = await axios.get("api/plans");
 
         response && setPlansData(response.data);
-
-        console.log("Los datos obtenidos del plan son ", response.data);
       } catch (error) {
         console.log("Error", error);
       }
