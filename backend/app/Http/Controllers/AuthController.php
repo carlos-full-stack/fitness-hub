@@ -20,7 +20,7 @@ class AuthController extends Controller
             'last_name' => 'string|max:50',
             'height' => 'integer|max:250',
             'weight' => 'integer|max:300',
-            'email' => 'required|string|email|unique:users',
+            'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed'
         ]);
 
