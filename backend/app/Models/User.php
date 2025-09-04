@@ -27,6 +27,8 @@ class User extends Authenticatable
         'weight',
         'email',
         'password',
+        'user_url',
+        'plan_id'
     ];
 
     /**
