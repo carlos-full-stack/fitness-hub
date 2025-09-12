@@ -28,7 +28,8 @@ class User extends Authenticatable
         'email',
         'password',
         'user_url',
-        'plan_id'
+        'plan_id',
+        'weekly_goal_days'
     ];
 
     /**
@@ -59,18 +60,18 @@ class User extends Authenticatable
         return $this->belongsTo(Plan::class);
     }
 
-    public function progress(): HasMany
-    {
-        return $this->hasMany(Progress::class);
-    }
-
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
     }
 
-    public function opinion(): HasMany
+    public function opinions(): HasMany
     {
         return $this->hasMany(Opinion::class);
+    }
+
+    public function workouts(): HasMany
+    {
+        return $this->hasMany(Workout::class);
     }
 }
