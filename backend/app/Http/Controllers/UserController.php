@@ -60,6 +60,7 @@ class UserController extends Controller
             'email' => 'sometimes|string|email|unique:users,email,' . $request->user()->id,
             'user_url' => 'sometimes|image|max:1000',
             'plan_id' => 'sometimes|integer',
+            'weekly_goal_days' => 'sometimes|integer|min:0|max:7'
         ]);
 
         $user = $request->user();
@@ -74,6 +75,7 @@ class UserController extends Controller
         if ($request->has('weight')) $updateData['weight'] = $request->weight;
         if ($request->has('email')) $updateData['email'] = $request->email;
         if ($request->has('plan_id')) $updateData['plan_id'] = $request->plan_id;
+        if ($request->has('weekly_goal_days')) $updateData['weekly_goal_days'] = $request->weekly_goal_days;
 
         if ($request->hasFile('user_url')) {
             $path = $request->file('user_url')->store('profile_photos', 'public');
