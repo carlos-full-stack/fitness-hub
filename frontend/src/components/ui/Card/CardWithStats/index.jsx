@@ -7,15 +7,15 @@ const cardTypes = {
   trend: StatisticsTrend,
 };
 
-export default function CardWithStats({ title, type, value }) {
+export default function CardWithStats({ title, variant, type, value }) {
   const Component = cardTypes[type];
 
   const children = (
-    <div className="flex flex-col gap-2 p-6">
+    <div className="flex flex-col gap-2 p-6 min-h-[220px]">
       <h3 className="text-xl">{title}</h3>
-      <Component value={value} />
+      <Component variant={variant} value={value} />
     </div>
   );
 
-  return <Card children={children} bgColor="primary" />;
+  return <Card children={children} bgColor="light" />;
 }
