@@ -16,7 +16,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('user', [UserController::class, 'showUser']);
     Route::get('user/bmi', [UserController::class, 'showUserBMI']);
-    Route::post('update', [UserController::class, 'update']);
+    Route::post('user/update', [UserController::class, 'update']);
 
     Route::post('logout', [AuthController::class, 'logout']);
 
@@ -24,4 +24,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('workout/getKmsProgress', [WorkoutController::class, 'getKmsProgress']);
     Route::get('workout/getCaloriesProgress', [WorkoutController::class, 'getCaloriesProgress']);
     Route::get('workout/getAttendanceProgress', [WorkoutController::class, 'getAttendanceProgress']);
+
 });
