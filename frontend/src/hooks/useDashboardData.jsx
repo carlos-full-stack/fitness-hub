@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const dashboardEndpoints = [
@@ -9,13 +9,14 @@ const dashboardEndpoints = [
 ];
 
 export default function useDashboardData() {
-  const token = localStorage.getItem("token");
-
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
+    setLoading(true);
+    const token = localStorage.getItem("token");
+
     const requests = dashboardEndpoints.map((item) =>
       axios.get(item.endpoint, {
         headers: { Authorization: `Bearer ${token}` },
@@ -32,7 +33,11 @@ export default function useDashboardData() {
       })
       .catch((err) => setError(err))
       .finally(() => setLoading(false));
-  }, [token]);
+  }, []);
 
-  return { data, error, loading };
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return { data, error, loading, refetch: fetchData };
 }
