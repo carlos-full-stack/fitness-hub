@@ -12,7 +12,7 @@ class UserController extends Controller
     {
         $user = $request->user();
 
-        if (!$user) return response()->json(['Message' => 'User not found'], 404);
+        if (!$user) return response()->json(['message' => 'User not found'], 404);
 
         return response()->json([
             'user' => $user,
@@ -24,10 +24,18 @@ class UserController extends Controller
     {
         $user = $request->user();
 
-        if (!$user) return response()->json(['Message' => 'User not found'], 404);
+        if (!$user) return response()->json(['message' => 'User not found'], 404);
 
         $userWeight = $user->weight;
         $userHeight = $user->height;
+
+        if (!$userWeight | !$userHeight) {
+            return response()->json([
+                'message' => "Weight or height not found",
+                "user_message" => "Please set your weight and height",
+                'category' => "No data",
+            ], 200);
+        }
 
         $imc = ($userWeight / ($userHeight ** 2)) * 10000;
         $imc = round($imc, 2);
@@ -44,6 +52,7 @@ class UserController extends Controller
         }
 
         return response()->json([
+            'message' => 'BMI calculated successfully',
             'category' => $category,
             'imc' => $imc
         ], 200);
@@ -68,6 +77,7 @@ class UserController extends Controller
         if (!$user) return response()->json(['message' => 'User not found'], 404);
 
         $updateData = [];
+
 
         if ($request->has('name')) $updateData['name'] = $request->name;
         if ($request->has('last_name')) $updateData['last_name'] = $request->last_name;
