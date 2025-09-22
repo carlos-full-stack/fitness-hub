@@ -2,14 +2,20 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import UserAvatar from "../../../header/Auth/UserAvatar";
 import { useAuth } from "../../../../context/AuthContext";
+import { useNotifications } from "../../../../context/NotificationContext";
 import Button from "../../Button";
 
-export default function CardWithAutoForm({ plansData, formFields }) {
+export default function CardWithAutoForm({
+  plansData,
+  formFields,
+  onFormUpdate,
+}) {
   const [userData, setuserData] = useState({});
   const [fieldErrors, setFieldErrors] = useState({});
   const debounceRef = useRef(null);
   const fileInputRef = useRef(null);
   const { user, setUser } = useAuth();
+  const { showSuccess, showError } = useNotifications();
 
   useEffect(() => {
     if (user) {
@@ -44,7 +50,7 @@ export default function CardWithAutoForm({ plansData, formFields }) {
     } else {
       debounceRef.current = setTimeout(() => {
         handleSubmit(newUserData);
-      }, 2000);
+      }, 1000);
     }
   };
 
@@ -65,7 +71,7 @@ export default function CardWithAutoForm({ plansData, formFields }) {
     });
 
     try {
-      const response = await axios.post("/api/update", formDataToSend, {
+      const response = await axios.post("/api/user/update", formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
@@ -75,10 +81,13 @@ export default function CardWithAutoForm({ plansData, formFields }) {
       if (response && response.data.user) {
         setUser(response.data.user);
         setFieldErrors({});
+        showSuccess(response.data.message);
+        onFormUpdate();
       }
     } catch (error) {
       const fieldErrors = error.response?.data?.errors;
       fieldErrors && setFieldErrors(fieldErrors);
+      showError(error.response.data.message);
     }
   };
 
@@ -115,40 +124,55 @@ export default function CardWithAutoForm({ plansData, formFields }) {
           <div
             key={index}
             className={`flex flex-col w-full ${
-              field.id !== 5 && field.id !== 6 ? "col-span-2" : ""
+              field.id !== 3 &&
+              field.id !== 4 &&
+              field.id !== 5 &&
+              field.id !== 6
+                ? "col-span-2"
+                : ""
             }`}
           >
             {field.type === "select" ? (
               <>
-                <label htmlFor="plans" className="text-white pb-3">
-                  {field.label}
-                </label>
-                <select
-                  id="plans"
-                  name={field.name}
-                  value={userData[field.name] || ""}
-                  onChange={handleOnChange}
-                  className="w-full md:size-auto border bg-white py-2 pr-3 pl-2 focus:outline-none"
-                >
-                  {plansData.map((plan, planIndex) => (
-                    <option key={planIndex} value={plan.id}>
-                      {plan.name}
-                    </option>
-                  ))}
-                </select>
+                <div className="flex flex-col w-full relative">
+                  <label htmlFor={field.id} className="text-white ">
+                    {field.label}
+                  </label>
+                  <select
+                    name={field.name}
+                    value={userData[field.name] || ""}
+                    onChange={handleOnChange}
+                    className="w-full border bg-white py-2 pr-3 pl-2 h-10 focus:outline-none"
+                  >
+                    {plansData.map((plan, planIndex) => (
+                      <option key={planIndex} value={plan.id}>
+                        {plan.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </>
             ) : (
-              <div className="w-full relative">
+              <div
+                className={`${
+                  field.id === 8 ? "flex flex-col gap-2" : ""
+                } w-full relative`}
+              >
+                <label htmlFor={field.id} className="text-white ">
+                  {field.label}
+                </label>
                 <input
                   type={field.type}
                   name={field.name}
                   placeholder={field.placeholder}
                   value={userData[field.name] || ""}
+                  min={field.id === 8 ? field.min : ""}
+                  max={field.id === 8 ? field.max : ""}
                   className={`w-full border ${
                     fieldErrors[field.name]
                       ? "border-red-500"
                       : "border-gray-800"
-                  } bg-white py-2 pr-3 pl-2 focus:outline-none`}
+                  } bg-white py-2 pr-3 pl-2 h-10 focus:outline-none`}
                   maxLength={
                     field.name === "weight" || field.name === "height"
                       ? 3
