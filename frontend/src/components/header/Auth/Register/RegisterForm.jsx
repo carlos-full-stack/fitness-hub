@@ -11,7 +11,7 @@ export default function RegisterForm({
   const [formValues, setFormValues] = useState({});
   const [registerErrors, setRegisterErrors] = useState({});
 
-  const { login } = useAuth();
+  const { setUser } = useAuth();
 
   const handleImputChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
@@ -24,12 +24,16 @@ export default function RegisterForm({
       const response = await axios.post("/api/register", formValues);
 
       if (response.data && response.data.user) {
-        onRegisterResult("success");
-        onRegisterSuccess();
+        const token = response.data.token;
+
+        localStorage.setItem("token", token);
 
         setTimeout(() => {
-          login(response.data.user);
+          setUser(response.data.user);
         }, 2000);
+
+        onRegisterResult("success");
+        onRegisterSuccess();
       }
     } catch (error) {
       const fieldErrors = error.response.data.errors;
