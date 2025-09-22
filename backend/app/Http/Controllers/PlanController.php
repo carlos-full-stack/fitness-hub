@@ -2,14 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Plan;
 
 class PlanController extends Controller
 {
-    public function showPlans() {
+    public function showPlans()
+    {
+
         $plans = Plan::all();
 
-        return response()->json($plans);
+        if ($plans->isEmpty()) {
+            return response()->json([
+                "message" => "No plans found",
+                "plans" => $plans
+            ], 404);
+        } else {
+            return response()->json([
+                "message" => "Plans retrieved successfully",
+                "plans" => $plans
+            ], 200);
+        }
     }
 }
