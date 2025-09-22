@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createContext, useState, useContext } from "react";
+import { useNotifications } from "./NotificationContext";
 
 const AuthContext = createContext({
   user: null,
@@ -12,6 +13,8 @@ const AuthContext = createContext({
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const { showInfo, showError } = useNotifications();
 
   const login = async (credentials) => {
     setLoading(true);
@@ -42,9 +45,29 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setUser(null);
+  const logout = async () => {
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await axios.post(
+        "api/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response && response.data) {
+        showInfo(response.data.message);
+      }
+    } catch (error) {
+      showError(error.response?.data?.message);
+    } finally {
+      localStorage.removeItem("token");
+      setUser(null);
+    }
   };
 
   return (
