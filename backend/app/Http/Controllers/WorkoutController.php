@@ -10,33 +10,52 @@ class WorkoutController extends Controller
 {
     public function store(Request $request)
     {
+
+        $user = $request->user();
+        if (!$user) return response()->json(['message' => 'User not found'], 404);
+
+        $todayWorkout = Workout::where('user_id', $user->id)
+            ->whereDate('created_at', Carbon::today())
+            ->get();
+
         $request->validate([
             'kms' => 'required|integer|min:0',
             'calories' => 'required|integer|min:0',
             'weight' => 'required|integer|min:1'
         ]);
 
-        $workout = Workout::create([
-            'kms' => $request->kms,
-            'calories' => $request->calories,
-            'weight' => $request->weight,
-            'user_id' => $request->user()->id,
-        ]);
-
         // Update user weight
-
-        $user = $request->user();
-
-        if (!$user) return response()->json(['Message' => 'User not found'], 404);
 
         $user->update([
             'weight' => $request->weight
         ]);
 
-        return response()->json([
-            'message' => 'Workout created successfully',
-            'workout' => $workout
-        ], 201);
+        if ($todayWorkout->isEmpty()) {
+            $workout = Workout::create([
+                'kms' => $request->kms,
+                'calories' => $request->calories,
+                'weight' => $request->weight,
+                'user_id' => $request->user()->id,
+            ]);
+            return response()->json([
+                'message' => 'Workout created successfully',
+                'workout' => $workout
+            ], 201);
+        } else {
+
+            $workout =  $todayWorkout->first();
+
+            $workout->update([
+                'kms' => $request->kms,
+                'calories' => $request->calories,
+                'weight' => $request->weight,
+            ]);
+
+            return response()->json([
+                'message' => 'Workout updated successfully',
+                'workout' => $workout
+            ], 200);
+        }
     }
 
     public function getWorkouts($user)
@@ -44,132 +63,84 @@ class WorkoutController extends Controller
         $endDate = Carbon::now();
         $startDate = Carbon::now()->subDays(6);
 
-        $workouts = Workout::where('user_id', $user->id)
+        $workouts_last_7_days = Workout::where('user_id', $user->id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('created_at', 'asc')
             ->get();
 
-        return $workouts;
+        return $workouts_last_7_days;
     }
 
     public function getKmsProgress(Request $request)
     {
         $user = $request->user();
 
-        if (!$user) return response()->json(['Message' => 'User not found'], 404);
+        if (!$user) return response()->json(['message' => 'User not found'], 404);
 
-        $workouts = $this->getWorkouts($user);
+        $workouts_last_7_days = $this->getWorkouts($user);
 
-        if ($workouts->isEmpty()) {
+        if ($workouts_last_7_days->isEmpty()) {
             return response()->json([
                 'message' => 'No data available',
-                'total_kms' => null,
-                'kms_progress' => null
+                'average_kms' => 0,
+                'total_kms' => 0
             ], 200);
         }
 
-        if ($workouts->count() == 1) {
+        $totalKms = $workouts_last_7_days->sum('kms');
+        $averageKms = round($workouts_last_7_days->avg('kms'), 2);
 
-            $totalKms = $workouts->first()->kms;
-
-            return response()->json([
-                'message' => 'No data to compare',
-                'total_kms' => $totalKms,
-                'kms_progress' => null
-
-            ], 200);
-        }
-
-        if ($workouts->count() > 1) {
-
-
-            $totalKms = $workouts->sum('kms');
-
-            $lastWorkout = $workouts->last()->kms;
-            $firstWorkout = $workouts->first()->kms;
-
-            if ($firstWorkout > 0) {
-                $kmsProgress = (($lastWorkout - $firstWorkout) /  $firstWorkout) * 100;
-                $roundedKmsProgress = round($kmsProgress, 0);
-            } else {
-                $kmsProgress = null;
-            }
-
-            return response()->json([
-                'message' => 'Full data available',
-                'total_kms' => $totalKms,
-                'kms_progress' => $roundedKmsProgress
-
-            ], 200);
-        };
+        return response()->json([
+            'message' => 'Kms data available',
+            'average_kms' => $averageKms,
+            'total_kms' => $totalKms
+        ], 200);
     }
+
     public function getCaloriesProgress(Request $request)
     {
         $user = $request->user();
 
-        if (!$user) return response()->json(['Message' => 'User not found'], 404);
+        if (!$user) return response()->json(['message' => 'User not found'], 404);
 
-        $workouts = $this->getWorkouts($user);
+        $workouts_last_7_days = $this->getWorkouts($user);
 
-        if ($workouts->isEmpty()) {
+        if ($workouts_last_7_days->isEmpty()) {
             return response()->json([
                 'message' => 'No data available',
-                'total_calories' => null,
-                'calories_progress' => null
+                'average_calories' => 0,
+                'total_calories' => 0
             ], 200);
         }
 
-        if ($workouts->count() == 1) {
+        $totalCalories = $workouts_last_7_days->sum('calories');
+        $averageCalories = round($workouts_last_7_days->avg('calories'), 2);
 
-            $totalCalories = $workouts->first()->calories;
+        return response()->json([
+            'message' => 'Calories data available',
+            'average_calories' => $averageCalories,
+            'total_calories' => $totalCalories
 
-            return response()->json([
-                'message' => 'No data to compare',
-                'total_calories' => $totalCalories,
-                'calories_progress' => null
-
-            ], 200);
-        }
-
-        if ($workouts->count() > 1) {
-
-            $totalCalories = $workouts->sum('calories');
-
-            $lastWorkout = $workouts->last()->calories;
-            $firstWorkout = $workouts->first()->calories;
-
-            if ($firstWorkout > 0) {
-                $caloriesProgress = (($lastWorkout - $firstWorkout) /  $firstWorkout) * 100;
-                $roundedCaloriesProgress = round($caloriesProgress, 0);
-            } else {
-                $caloriesProgress = null;
-            }
-
-            return response()->json([
-                'message' => 'Full data available',
-                'total_calories' => $totalCalories,
-                'calories_progress' => $roundedCaloriesProgress
-
-            ], 200);
-        };
+        ], 200);
     }
 
     public function getAttendanceProgress(Request $request)
     {
 
         $user = $request->user();
+        $category = "";
 
-        if (!$user) return response()->json(['Message' => 'User not found'], 404);
+        if (!$user) return response()->json(['message' => 'User not found'], 404);
 
-        $workouts = $this->getWorkouts($user);
+        $workouts_last_7_days = $this->getWorkouts($user);
         $weeklyGoalDays = $user->weekly_goal_days;
 
         if (!$weeklyGoalDays) return response()->json([
-            'Message' => 'No goal defined',
-            'attendance_progress' => null
+            'message' => 'No goal defined',
+            'attendance_last_7_days' => null
         ], 200);
 
-        $totalWorkouts = $workouts->count();
+        $totalWorkouts = $workouts_last_7_days->count(); // 10
         $attendanceProgress = round(($totalWorkouts / $weeklyGoalDays) * 100, 0);
 
         if ($attendanceProgress < 25) {
@@ -178,6 +149,8 @@ class WorkoutController extends Controller
             $category = "Average";
         } elseif ($attendanceProgress < 75) {
             $category = "On Track!";
+        } elseif ($attendanceProgress < 100) {
+            $category = "Almost!";
         } else {
             $category = "Done!";
         }
@@ -185,7 +158,9 @@ class WorkoutController extends Controller
         return response()->json([
             'message' => 'Data available',
             'category' => $category,
-            'attendance_progress' => $attendanceProgress,
+            'attendance_last_7_days' => $attendanceProgress,
+            'totalWorkouts' => $totalWorkouts,
+            'weeklyGoalDays' => $weeklyGoalDays
         ], 200);
     }
 }
