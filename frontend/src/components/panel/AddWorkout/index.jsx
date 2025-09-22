@@ -28,7 +28,7 @@ const workoutFormFields = [
   },
 ];
 
-export default function AddWorkout() {
+export default function AddWorkout({ onFormUpdate }) {
   const [isOpen, setIsOpen] = useState(false);
   const [addWorkoutState, setAddWorkoutState] = useState("initial");
 
@@ -64,6 +64,7 @@ export default function AddWorkout() {
                   workoutFormFields={workoutFormFields}
                   setAddWorkoutState={setAddWorkoutState}
                   onAddWorkoutSuccess={closeDialogWithDelay}
+                  onFormUpdate={onFormUpdate}
                 />
               </>
             )}
