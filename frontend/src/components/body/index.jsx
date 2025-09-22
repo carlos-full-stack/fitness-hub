@@ -127,7 +127,7 @@ export default function Body() {
           id="featured"
           textAlign="center"
         />
-        <CardGallery type="image" cards={section1cards} />
+        <CardGallery type="image" cards={section1cards} loading={false} />
       </Section>
       <Section>
         <div className="flex flex-col md:flex-row">
@@ -178,7 +178,7 @@ export default function Body() {
           level="h2"
           textAlign="center"
         />
-        <CardGallery type="description" cards={section2cards} />
+        <CardGallery type="description" cards={section2cards} loading={false} />
       </Section>
       <Section backgroundColor="light">
         <Heading
@@ -193,7 +193,7 @@ export default function Body() {
           id="pricing"
           textAlign="center"
         />
-        <CardGallery type="price" cards={section3cards} />
+        <CardGallery type="price" cards={section3cards} loading={false} />
       </Section>
       <Section>
         <div className="flex flex-row ">
@@ -211,7 +211,7 @@ export default function Body() {
           />
         </div>
         <div className="pt-8">
-          <CardGallery type="rating" cards={section4cards} />
+          <CardGallery type="rating" cards={section4cards} loading={false} />
         </div>
       </Section>
       <Section backgroundColor="dark">
