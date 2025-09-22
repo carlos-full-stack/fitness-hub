@@ -1,6 +1,7 @@
 import PlusIcon from "./PlusIcon";
 
-const baseClasses = "flex capitalize cursor-pointer py-2 px-4 rounded-sm";
+const baseClasses =
+  "inline-flex justify-center w-auto py-2 px-3 md:px-4 text-sm md:text-base capitalize cursor-pointer rounded-sm";
 const buttonColors = {
   primary: "text-gray-800 bg-primary hover:bg-primary-hover ",
   light: "text-white bg-gray-700 hover:bg-gray-700",
