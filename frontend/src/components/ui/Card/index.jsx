@@ -1,4 +1,4 @@
-import styles from "./card.module.css";
+import styles from "./Card.module.css";
 
 const bgColorClasses = {
   light: "bg-gray-700",
