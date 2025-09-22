@@ -1,24 +1,29 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'Druk-Condensed-Super';
+  font-family: "Druk-Condensed-Super";
   src: url(./assets/fonts/Druk-Condensed-Super.otf);
 }
 
 @theme {
   --color-primary: #d8f900;
-  --color-primary-hover: #CFED00;
+  --color-primary-hover: #cfed00;
   --font-Druk: "Druk-Condensed-Super", "sans-serif";
   --breakpoint-3xl: 120rem;
 }
 
-
 html {
   min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: linear-gradient(180deg, rgba(226, 232, 240, 1) 0%, rgba(203, 213, 225, 1) 50%) no-repeat;
+  background: linear-gradient(
+      180deg,
+      rgba(226, 232, 240, 1) 0%,
+      rgba(203, 213, 225, 1) 50%
+    )
+    no-repeat;
 }
 
 a {
