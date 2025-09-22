@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNotifications } from "../../../../context/NotificationContext";
 import Card from "..";
 import Button from "../../Button";
 
 export default function CardWithSubmitForm({ formFields, title, subtitle }) {
   const [userData, setuserData] = useState({});
+  const { showSuccess } = useNotifications();
 
   const handleImputChange = (e) => {
     const { name, value } = e.target;
@@ -15,8 +17,7 @@ export default function CardWithSubmitForm({ formFields, title, subtitle }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Formulario enviado", userData);
-    alert("Formulario enviado");
+    showSuccess("Thanks for subscribing");
 
     setuserData({});
   };
@@ -30,23 +31,25 @@ export default function CardWithSubmitForm({ formFields, title, subtitle }) {
       <div>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col md:flex-row justify-center gap-2"
+          className="flex flex-col lg:flex-row justify-center gap-5"
         >
-          {formFields.map((field, index) => (
-            <div key={index} className="w-full md:size-auto">
-              <label htmlFor={field.name}></label>
-              <input
-                key={index}
-                type={field.type}
-                name={field.name}
-                placeholder={field.placeholder}
-                value={userData[field.name] || ""}
-                onChange={handleImputChange}
-                className="w-full md:size-auto bg-white py-2 pr-3 pl-2 focus:outline-none"
-              />
-            </div>
-          ))}
-          <Button text="Send" color="dark" type="submit" />
+          <div className="flex flex-col md:flex-row gap-3 w-full md:size-auto">
+            {formFields.map((field) => (
+              <label key={field.id} htmlFor={field.name}>
+                <input
+                  type={field.type}
+                  name={field.name}
+                  placeholder={field.placeholder}
+                  value={userData[field.name] || ""}
+                  onChange={handleImputChange}
+                  className="w-full md:size-auto bg-white py-2 pr-3 pl-2 focus:outline-none"
+                  required
+                  minLength={3}
+                />
+              </label>
+            ))}
+          </div>
+          <Button text="Subscribe now!" color="dark" type="submit" />
         </form>
       </div>
     </div>

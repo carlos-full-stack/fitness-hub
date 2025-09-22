@@ -6,6 +6,7 @@ export default function AddWorkoutForm({
   workoutFormFields,
   setAddWorkoutState,
   onAddWorkoutSuccess,
+  onFormUpdate,
 }) {
   const [fieldValues, setFieldValues] = useState({});
   const [fieldErrors, setFieldErrors] = useState({});
@@ -19,8 +20,6 @@ export default function AddWorkoutForm({
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("Los valores a suministrar son: ", fieldValues);
-
     try {
       const response = await axios.post("api/workout/store", fieldValues, {
         headers: {
@@ -28,14 +27,12 @@ export default function AddWorkoutForm({
         },
       });
 
-      console.log("La respuesta a storeWorkout es: ", response);
-
       if (response && response.data) {
         setAddWorkoutState("success");
         onAddWorkoutSuccess();
+        onFormUpdate();
       }
     } catch (error) {
-      console.log("Error", error);
       const fieldErrors = error.response?.data?.errors;
       fieldErrors && setFieldErrors(fieldErrors);
       setAddWorkoutState("error");
