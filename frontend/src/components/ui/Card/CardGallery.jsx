@@ -14,7 +14,7 @@ const cardTypes = {
   default: Card,
 };
 
-export default function CardGallery({ type, cards }) {
+export default function CardGallery({ type, cards, loading }) {
   const CardComponent = cardTypes[type] || cardTypes.default;
 
   return (
@@ -22,7 +22,11 @@ export default function CardGallery({ type, cards }) {
       <ul className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6 w-full justify-center">
         {cards.map((card, index) => (
           <li className="flex-1 gap-6" key={index}>
-            <CardComponent {...card} />
+            {CardComponent === CardWithStats ? (
+              <CardComponent {...card} loading={loading} />
+            ) : (
+              <CardComponent {...card} />
+            )}
           </li>
         ))}
       </ul>
