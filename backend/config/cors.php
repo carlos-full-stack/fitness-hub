@@ -21,7 +21,7 @@ return [
 
     'allowed_origins' => [
         'https://fitness-hub.me',
-        'https://fitness-hub-mu.vercel.app/',
+        'https://fitness-hub-mu.vercel.app',
     ],
 
     'allowed_origins_patterns' => [],
