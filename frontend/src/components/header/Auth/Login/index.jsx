@@ -56,7 +56,12 @@ export default function Login() {
                 <DialogTitle className="text-5xl text-gray-800 font-Druk tracking-wide uppercase">
                   Welcome back!
                 </DialogTitle>
-                <Description>Please enter your credentials</Description>
+                <Description>
+                  <div>Please enter your credentials</div>
+                  <span className="text-sm text-gray-500">
+                    demo: dev@dev.com / developr
+                  </span>
+                </Description>
                 <LoginForm
                   loginFormFields={loginFormFields}
                   setLoginState={setLoginState}
