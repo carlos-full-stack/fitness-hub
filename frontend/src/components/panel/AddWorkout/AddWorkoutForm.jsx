@@ -22,11 +22,15 @@ export default function AddWorkoutForm({
     event.preventDefault();
 
     try {
-      const response = await axios.post(getApiUrl("api/workout/store"), fieldValues, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        getApiUrl("/workout/store"),
+        fieldValues,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response && response.data) {
         setAddWorkoutState("success");
