@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useState, useContext } from "react";
 import { useNotifications } from "./NotificationContext";
+import { getApiUrl } from "../tools/apiUrl";
 
 const AuthContext = createContext({
   user: null,
@@ -19,12 +20,12 @@ export default function AuthProvider({ children }) {
   const login = async (credentials) => {
     setLoading(true);
     try {
-      const response = await axios.post("api/login", credentials);
+      const response = await axios.post(getApiUrl("/login"), credentials);
       if (response && response.data) {
         const token = response.data.token;
         localStorage.setItem("token", token);
 
-        const userResponse = await axios.get("api/user", {
+        const userResponse = await axios.get(getApiUrl("/user"), {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -50,7 +51,7 @@ export default function AuthProvider({ children }) {
 
     try {
       const response = await axios.post(
-        "api/logout",
+        getApiUrl("/logout"),
         {},
         {
           headers: {
