@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Button from "../../../ui/Button";
 import { useAuth } from "../../../../context/AuthContext";
+import { getApiUrl } from "../../../../tools/apiUrl";
 
 export default function RegisterForm({
   registerFormFields,
@@ -21,7 +22,7 @@ export default function RegisterForm({
     event.preventDefault();
 
     try {
-      const response = await axios.post("/api/register", formValues);
+      const response = await axios.post(getApiUrl("/register"), formValues);
 
       if (response.data && response.data.user) {
         const token = response.data.token;

@@ -3,6 +3,7 @@ import axios from "axios";
 import UserAvatar from "../../../header/Auth/UserAvatar";
 import { useAuth } from "../../../../context/AuthContext";
 import { useNotifications } from "../../../../context/NotificationContext";
+import { getApiUrl } from "../../../../tools/apiUrl";
 import Button from "../../Button";
 
 export default function CardWithAutoForm({
@@ -71,12 +72,16 @@ export default function CardWithAutoForm({
     });
 
     try {
-      const response = await axios.post("/api/user/update", formDataToSend, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        getApiUrl("/user/update"),
+        formDataToSend,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       if (response && response.data.user) {
         setUser(response.data.user);

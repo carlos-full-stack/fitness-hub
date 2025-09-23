@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { getApiUrl } from "../tools/apiUrl";
 
 const dashboardEndpoints = [
-  { name: "bmi", endpoint: "api/user/bmi" },
-  { name: "kms", endpoint: "api/workout/getKmsProgress" },
-  { name: "calories", endpoint: "api/workout/getCaloriesProgress" },
-  { name: "attendance", endpoint: "api/workout/getAttendanceProgress" },
+  { name: "bmi", endpoint: getApiUrl("/user/bmi") },
+  { name: "kms", endpoint: getApiUrl("/workout/getKmsProgress") },
+  { name: "calories", endpoint: getApiUrl("/workout/getCaloriesProgress") },
+  { name: "attendance", endpoint: getApiUrl("/workout/getAttendanceProgress") },
 ];
 
 export default function useDashboardData() {
