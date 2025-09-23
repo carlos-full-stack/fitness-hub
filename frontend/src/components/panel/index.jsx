@@ -8,6 +8,8 @@ import CardWithAutoForm from "../ui/Card/CardWithForm/CardWithAutoForm";
 import useDashboardData from "../../hooks/useDashboardData";
 import AddWorkout from "./AddWorkout";
 
+import { getApiUrl } from "../../tools/apiUrl";
+
 const formFields = [
   { id: 1, type: "text", name: "name", placeholder: "Name" },
   {
@@ -105,7 +107,7 @@ export default function Panel() {
     let isMounted = true;
     async function fetchPlans() {
       try {
-        const response = await axios.get("api/plans");
+        const response = await axios.get(getApiUrl("/plans"));
         if (isMounted && response) setPlansData(response.data.plans);
       } catch (error) {
         showError(error.response.data.message);
