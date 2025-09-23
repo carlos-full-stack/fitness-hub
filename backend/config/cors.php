@@ -19,7 +19,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:3000'],
+    'allowed_origins' => [
+        'https://fitness-hub.me',
+        'https://fitness-hub-liard.vercel.app',
+    ],
 
     'allowed_origins_patterns' => [],
 
