@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import Button from "../../ui/Button";
+import { getApiUrl } from "../../../tools/apiUrl";
 
 export default function AddWorkoutForm({
   workoutFormFields,
@@ -21,7 +22,7 @@ export default function AddWorkoutForm({
     event.preventDefault();
 
     try {
-      const response = await axios.post("api/workout/store", fieldValues, {
+      const response = await axios.post(getApiUrl("api/workout/store"), fieldValues, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
